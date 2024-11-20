@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>RTSP Stream Manager</title>
+        <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+    </head>
+    <body>
+        <h1>Manage RTSP Streams</h1>
+
+        <div id="stream-list">
+            <ul>
+                {% for stream in streams %}
+                <li>
+                    Stream {{ stream }}
+                    <button hx-delete="/remove/{{ stream }}">Remove</button>
+                    <a href="/dash_output/manifest.mpd" target="_blank">DASH</a>
+                    |
+                    <a href="/hls_output/playlist.m3u8" target="_blank">HLS</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <form hx-post="/add">
+            <input type="text" name="url" placeholder="RTSP URL" />
+            <button type="submit">Add Stream</button>
+        </form>
+    </body>
+</html>
